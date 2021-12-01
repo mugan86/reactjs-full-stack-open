@@ -1,54 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
-const Hello = ({name, age}) => {
-  const bornYear = () => new Date().getFullYear() - age;
-  return (
-    <div>
-      <p>Hello {name}, you are {age} years old</p>
-      <p>So you were probably born in {bornYear()}</p>
-    </div>
-  )
-}
+const Display = ({ counter }) =>  <div>{counter}</div>;
 
-const Footer = () => {
-  return (
-    <div>
-      Greeting app created by <a href="https://github.com/mugan86">Anartz Mugika Ledo</a>
-    </div>
-  )
-}
-
+const Button = ({ handleClick, text }) => (
+  <button onClick={handleClick}>
+    {text}
+  </button>
+);
 const App = () => {
+  const [counter, setCounter] = useState(0);
+  const increaseByOne = () => setCounter(counter + 1);
+  const decreaseByOne = () => setCounter(counter - 1);
+  const setToZero = () => setCounter(0);
   return (
     <div>
-      <h1>Greetings</h1>
-      <Hello name="Anartz" age={35}/>
-      <Footer />
+      <Display counter={counter} />
+      <Button handleClick={increaseByOne} text="plus" />
+      <Button handleClick={decreaseByOne} text="minus" />
+      <Button handleClick={setToZero} text="zero" />
     </div>
   );
 };
 
-const AppCounter = ({counter}) => {
-  return (
-    <div>{counter}</div>
-  )
-}
-
-let counter = 1
-
-const refresh = () => {
-  ReactDOM.render(<AppCounter counter={counter} />, 
-  document.getElementById('root'))
-}
-
-setInterval(() => {
-  refresh()
-  counter += 1
-}, 1000)
-/*ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById("root")
-);*/
+ReactDOM.render(<App />, document.getElementById("root"));
