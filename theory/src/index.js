@@ -1,10 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-const Hello = (props) => {
+const Hello = ({name, age}) => {
+  const bornYear = () => new Date().getFullYear() - age;
   return (
     <div>
-      <p>Hello {props.name}, you are {props.age} years old</p>
+      <p>Hello {name}, you are {age} years old</p>
+      <p>So you were probably born in {bornYear()}</p>
     </div>
   )
 }
@@ -26,9 +28,27 @@ const App = () => {
     </div>
   );
 };
-ReactDOM.render(
+
+const AppCounter = ({counter}) => {
+  return (
+    <div>{counter}</div>
+  )
+}
+
+let counter = 1
+
+const refresh = () => {
+  ReactDOM.render(<AppCounter counter={counter} />, 
+  document.getElementById('root'))
+}
+
+setInterval(() => {
+  refresh()
+  counter += 1
+}, 1000)
+/*ReactDOM.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
   document.getElementById("root")
-);
+);*/
