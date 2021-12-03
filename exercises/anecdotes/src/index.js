@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
+const Resume = ({ text, votes }) => (
+  <div>
+    <p>{text}</p>
+    <p>Tiene {votes} votos.</p>
+  </div>
+);
 const MostVotes = ({ votes }) => {
   console.log(votes);
   const maxValue = Math.max(...votes);
@@ -15,12 +21,15 @@ const MostVotes = ({ votes }) => {
     return true;
   });
 
-  const selectItem = (maxValuesSelects.length === 1) ? 0: getRandomInt(0, maxValuesSelects.length - 1);
+  const selectItem =
+    maxValuesSelects.length === 1
+      ? 0
+      : getRandomInt(0, maxValuesSelects.length - 1);
   return (
-    <div>
-      <p>{anecdotes[maxValuesSelects[selectItem]]}</p>
-      <p>Tiene {votes[maxValuesSelects[selectItem]]} votos.</p>
-    </div>
+    <Resume
+      text={anecdotes[maxValuesSelects[selectItem]]}
+      votes={votes[maxValuesSelects[selectItem]]}
+    />
   );
 };
 // Retorna un entero aleatorio entre min (incluido) y max (excluido)
@@ -46,8 +55,7 @@ const App = ({ anecdotes }) => {
   };
   return (
     <div>
-      <p>{anecdotes[selected]}</p>
-      <p>Tiene {votes[selected]} votos.</p>
+      <Resume text={anecdotes[selected]} votes={votes[selected]} />
       <Button onClick={selectAnecdote} text="Select Next Anecdote" />
       <Button onClick={addVoteInSelectAnecdote} text="Add Vote in Anecdote" />
       <h2>La anécdota + votada:</h2>
