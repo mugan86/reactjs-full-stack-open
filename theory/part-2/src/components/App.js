@@ -9,33 +9,30 @@ const App = (props) => {
   // Aquí enviamos los datos del formulario, en este caso
   // solo tenemos una nota
   const addNote = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     const noteObject = {
       content: newNote,
       date: new Date().toISOString(),
       important: Math.random() < 0.5,
       id: notes.length + 1,
-    }
-  
-    setNotes(notes.concat(noteObject))
-    setNewNote('') // Resetear la nota
-  }
+    };
+
+    setNotes(notes.concat(noteObject));
+    setNewNote(""); // Resetear la nota
+  };
   // Aquí almacenamos los cambios
-  const handleNoteChange = (event) => {
-    console.log(event.target.value, event.target)
-    setNewNote(event.target.value)
-  }
+  const handleNoteChange = (event) => setNewNote(event.target.value);
 
   const notesToShow = showAll
     ? notes
-    : notes.filter(note => note.important === true);
+    : notes.filter((note) => note.important === true);
 
   return (
     <div>
       <h1>Notes</h1>
       <div>
         <button onClick={() => setShowAll(!showAll)}>
-          Show {showAll ? 'important' : 'all' }
+          Show {showAll ? "important" : "all"}
         </button>
       </div>
       <ul>
@@ -44,8 +41,7 @@ const App = (props) => {
         ))}
       </ul>
       <form onSubmit={addNote}>
-        <input value={newNote}
-          onChange={handleNoteChange}/>
+        <input value={newNote} onChange={handleNoteChange} />
         <button type="submit">Save</button>
       </form>
     </div>
