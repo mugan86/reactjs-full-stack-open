@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Persons from "./components/Persons";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
+import Title from "./components/Title";
 const App = () => {
   const [persons, setPersons] = useState([
     { id: 1, name: "Arto Hellas", number: "040-123456" },
@@ -56,9 +57,9 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <Title title={"Phonebook"} />
       <Filter value={newSearch} onChange={filterPeople} />
-      <h2>Add New contact</h2>
+      <Title title={"Add new contact"} />
       <PersonForm
         onSubmit={addPerson}
         valueName={newName}
@@ -66,7 +67,7 @@ const App = () => {
         valuePhone={newPhone}
         changePhone={handlePhoneChange}
       />
-      <h2>Numbers</h2>
+      <Title title={"Numbers List"} />
       <Persons list={personsToShow} />
     </div>
   );
