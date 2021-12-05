@@ -1,11 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Note from "./Note";
-
-const App = (props) => {
-  const [notes, setNotes] = useState(props.notes);
+import axios from "axios";
+const App = () => {
+  const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState("a new note...");
   // Para filtrar elementos mostrados
   const [showAll, setShowAll] = useState(true);
+  /**
+   * Ahora podemos ver más claramente que la función 
+   * useEffect en realidad toma dos parámetros. 
+   * La primera es una función, el efecto en sí mismo. 
+   * Según la documentación:
+   * De forma predeterminada, los efectos se ejecutan 
+   * después de cada renderizado completo, pero puede 
+   * elegir activarlo solo cuando ciertos valores han
+   * cambiado.
+   * Por lo tanto, por defecto, el efecto siempre se 
+   * ejecuta después de que el componente ha sido 
+   * renderizado. En nuestro caso, sin embargo, solo 
+   * queremos ejecutar el efecto junto con el primer 
+   * render.
+   * El segundo parámetro de useEffect se usa para 
+   * especificar la frecuencia con la que se ejecuta 
+   * el efecto. Si el segundo parámetro es una matriz 
+   * vacía [], entonces el efecto solo se ejecuta 
+   * junto con el primer renderizado del componente.
+   */
+  const hook = () => {
+    console.log("effect");
+    axios.get("http://localhost:3001/notes").then((response) => {
+      console.log("promise fulfilled");
+      setNotes(response.data);
+    });
+  };
+  useEffect(hook, []);
+  console.log("render", notes.length, "notes");
   // Aquí enviamos los datos del formulario, en este caso
   // solo tenemos una nota
   const addNote = (event) => {
