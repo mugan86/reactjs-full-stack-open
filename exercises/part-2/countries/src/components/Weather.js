@@ -10,8 +10,7 @@ const Weather = ({ capital, location }) => {
       setCurrentWeather(result);
     });
   };
-  useEffect(hooks, []);
-  console.log(currentWeather);
+  useEffect(hooks, [capital, location]);
   if (currentWeather) {
     return (
       <div>
