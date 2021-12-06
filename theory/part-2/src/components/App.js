@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import noteService from "./../services/notes";
 import AddNoteForm from "./AddNoteForm";
 import NotesList from "./NotesList";
+import Footer from "./Footer";
+import "./../index.css";
+
 const App = () => {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState("a new note...");
@@ -86,6 +89,7 @@ const App = () => {
         newItem={newNote}
         onChange={handleNoteChange}
       />
+      <Footer />
     </div>
   );
 };
