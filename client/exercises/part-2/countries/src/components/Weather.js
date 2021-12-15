@@ -1,33 +1,24 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useFetchWeatherCountry } from "../hooks/useFetchWeatherCountry";
 // https://www.weatherapi.com/my/
 const Weather = ({ capital, location }) => {
-  const [currentWeather, setCurrentWeather] = useState();
-  const hooks = () => {
-    const API_URL = `https://api.weatherapi.com/v1/current.json?key=${process.env.REACT_APP_OWM_API_KEY}&q=${location[0]},${location[1]}&aqi=no`;
-    axios.get(API_URL).then((response) => {
-      const result = response.data;
-      setCurrentWeather(result);
-    });
-  };
-  useEffect(hooks, [capital, location]);
-  if (currentWeather) {
-    return (
-      <div>
-        <h3>Weather in {capital}</h3>
-        <p>Temperature: {currentWeather["current"].temp_c}</p>
-        <img
-          src={`https:${currentWeather["current"].condition.icon}`}
-          alt={`Weather ${capital}`}
-        />
-        <p>
-          Wind: {currentWeather["current"].wind_kph} km/h / Direction:{" "}
-          {currentWeather["current"].wind_dir}
-        </p>
-      </div>
-    );
-  }
-  return <div>Esperando datos...</div>;
+  const { data: weather, loading } = useFetchWeatherCountry(location);
+  return loading ? (
+    <div>Esperando datos...</div>
+  ) : (
+    <div>
+      <h3>Weather in {capital}</h3>
+      <p>Temperature: {weather["current"].temp_c}</p>
+      <img
+        src={`https:${weather["current"].condition.icon}`}
+        alt={`Weather ${capital}`}
+      />
+      <p>
+        Wind: {weather["current"].wind_kph} km/h / Direction:{" "}
+        {weather["current"].wind_dir}
+      </p>
+    </div>
+  );
 };
 
 export default Weather;

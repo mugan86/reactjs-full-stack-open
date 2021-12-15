@@ -9,8 +9,6 @@ app.use(express.json());
 
 app.use(cors());
 
-app.use(express.json());
-
 const requestLogger = (request, __, next) => {
   console.log("Method:", request.method);
   console.log("Path:  ", request.path);
@@ -21,11 +19,7 @@ const requestLogger = (request, __, next) => {
 
 app.use(requestLogger);
 
-const unknownEndpoint = (_, response) => {
-  response.status(404).send({ error: "unknown endpoint" });
-};
 
-app.use(unknownEndpoint);
 
 // Registramos todos los eventos que surgen dentro de la API almacenando en Morgan
 // create a write stream (in append mode)
@@ -107,6 +101,12 @@ app.post("/api/notes", (request, response) => {
 
   response.json(note);
 });
-const PORT = 3001;
+
+const unknownEndpoint = (_, response) => {
+  response.status(404).send({ error: "unknown endpoint" });
+};
+
+app.use(unknownEndpoint);
+const PORT = process.env.PORT || 3001;
 app.listen(PORT);
 console.log(`Server running on port ${PORT}`);

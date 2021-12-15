@@ -1,18 +1,11 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import Result from "./Result";
 import Search from "./Search";
+import { useFetchCountries } from "../hooks/useFetchCountries";
 function App() {
-  const [countries, setCountries] = useState([]);
   const [search, setSearch] = useState("");
   const [individualSelect, setIndividualSelect] = useState("");
-  // Carga de lista de 
-  const hooks = () => {
-    axios
-      .get("https://restcountries.com/v3.1/all")
-      .then((response) => setCountries(response.data));
-  };
-  useEffect(hooks, []);
+  const { data: countries } = useFetchCountries();
 
   const searchData = (event) => {
     setSearch(event.target.value);
